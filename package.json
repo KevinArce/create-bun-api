@@ -1,0 +1,62 @@
+{
+  "name": "create-bun-api",
+  "version": "0.1.0",
+  "description": "Create an agent-ready Bun + Elysia HTTP API (SQLite, JWT auth, OpenAPI docs) with one non-interactive command. Ships AGENTS.md, Agent Skills, and a verify script; --json output for AI coding agents.",
+  "type": "module",
+  "bin": {
+    "create-bun-api": "src/cli.ts"
+  },
+  "files": [
+    "src",
+    "!src/**/*.test.ts",
+    "templates",
+    "!templates/**/node_modules",
+    "skills",
+    "schemas"
+  ],
+  "scripts": {
+    "test": "bun test tests",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "template:install": "cd templates/api && bun install --frozen-lockfile",
+    "template:verify": "cd templates/api && bun run verify",
+    "ci": "bun install --frozen-lockfile && bun run typecheck && bun run lint && bun run template:install && bun run template:verify && bun run test && bun run evals:selftest",
+    "evals:selftest": "bun evals/run.ts --agent oracle --arm both && bun evals/run.ts --agent noop"
+  },
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "license": "MIT OR Apache-2.0",
+  "author": "Kevin Arce <arcex@proton.me>",
+  "homepage": "https://github.com/KevinArce/bun-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinArce/bun-cli.git"
+  },
+  "keywords": [
+    "bun",
+    "elysia",
+    "api",
+    "rest-api",
+    "create",
+    "scaffold",
+    "starter",
+    "template",
+    "sqlite",
+    "jwt",
+    "openapi",
+    "ai-agents",
+    "agents-md",
+    "agent-skills",
+    "claude-code",
+    "codex",
+    "cursor"
+  ],
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/bun": "^1.4.3",
+    "ajv": "^8.20.0",
+    "typescript": "^7.0.2"
+  }
+}

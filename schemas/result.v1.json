@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "bun-api/result@1",
+  "title": "create-bun-api --json output for the new and doctor commands",
+  "type": "object",
+  "required": ["schema", "ok", "command", "version", "warnings"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "bun-api/result@1" },
+    "ok": { "type": "boolean" },
+    "command": { "enum": ["new", "doctor"] },
+    "version": { "type": "string" },
+    "dryRun": { "type": "boolean" },
+    "project": {
+      "type": "object",
+      "required": ["name", "path", "template", "templateVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "path": { "type": "string", "description": "Absolute path" },
+        "template": { "type": "string" },
+        "templateVersion": { "type": "string" }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "enum": ["plan", "write", "install", "git", "verify"] },
+          "status": { "enum": ["ok", "skipped", "failed"] },
+          "ms": { "type": "integer", "minimum": 0 },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Dry run only: every path that would be written"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "message"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "enum": ["bun", "git", "registry", "write"] },
+          "status": { "enum": ["ok", "warn", "fail"] },
+          "message": { "type": "string" },
+          "hint": { "type": "string" }
+        }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "next": { "type": "array", "items": { "type": "string" } },
+    "error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "USAGE",
+            "INVALID_NAME",
+            "UNKNOWN_TEMPLATE",
+            "PREREQUISITE_MISSING",
+            "TARGET_EXISTS",
+            "WRITE_FAILED",
+            "INSTALL_FAILED",
+            "VERIFY_FAILED",
+            "INTERNAL"
+          ]
+        },
+        "message": { "type": "string" },
+        "hint": { "type": "string" },
+        "details": {}
+      }
+    }
+  },
+  "if": { "properties": { "ok": { "const": false } } },
+  "then": { "required": ["error"] },
+  "else": { "not": { "required": ["error"] } }
+}

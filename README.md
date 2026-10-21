@@ -1,35 +1,79 @@
-# Bun CLI Generator 😎
+# create-bun-api
+
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KevinArce/bun-cli)
 
-## About 🦀
+**An agent-ready starter for Bun HTTP APIs.** One command creates a working Elysia + SQLite + JWT API
+that installs from a lockfile, makes its first commit, and proves itself with its own `verify` script.
+The project ships with `AGENTS.md` and Agent Skills, so coding agents (Claude Code, Codex, Cursor,
+Gemini CLI, and others) follow the same conventions every time.
 
-Bun CLI Generator is a command-line tool built in Rust, designed to streamline the process of setting up new Bun projects. With a simple command, users can generate a basic Bun project structure, including necessary configuration files and a ready-to-go project setup, saving time and setting a standard structure for Bun applications.
+> **Status:** pre-release, not yet published to npm ([roadmap](docs/PLAN.md)). This replaces the Rust
+> `bun-cli` crate (0.3.x); see [docs/decisions/0001-agent-first-redesign.md](docs/decisions/0001-agent-first-redesign.md)
+> for why.
 
-## Features 🚀
+## Quick start
 
-- Generate a new Bun project with a standard directory structure.
-- Create essential files like `package.json`, `bun.lockb`, and a basic `.gitignore`.
-- (Optional) Include setup options for databases, testing frameworks, and more.
-- Easy to use, with a clear and concise command-line interface.
-
-## Installation 👾
-
-To install Bun CLI Generator, ensure you have Rust and Cargo installed on your machine. Then run:
+Once published:
 
 ```bash
-cargo install bun-cli
+bun create bun-api my-api        # or: bunx create-bun-api my-api
+cd my-api && bun run dev          # http://localhost:3000 · API docs at /docs
 ```
 
-## Usage ⚒️
-
-After installing, you can create a new Bun project by simply running:
+From this repository today:
 
 ```bash
-bun-cli
+bun install
+bun src/cli.ts ../my-api
 ```
-Then enter a cool name for your project 😎, for example "my-cool-project".
 
-This command creates a new directory called my-cool-project with all the necessary files and directories for a Bun project.
+## What you get
 
-## Contributing 🤠
-Contributions to Bun CLI Generator are welcome! If you have suggestions for improvements or encounter any issues, please open an issue or submit a pull request on GitHub.
+| | |
+| --- | --- |
+| Stack | Bun, Elysia 1.4, `bun:sqlite`, `jose` (JWT), OpenAPI docs via `@elysiajs/openapi` |
+| Endpoints | `/health`, `/auth/register`, `/auth/login`, `/users/me` |
+| Safety defaults | argon2id at 64 MiB, correct HTTP status codes, secrets redacted from logs, `.env` gitignored, config validated at boot |
+| Proof | `bun run verify`: typecheck, lint, test, then boot and `GET /health`, with `--json` output |
+| For agents | `AGENTS.md` (+ `CLAUDE.md` importing it) and skills in `.agents/skills/` and `.claude/skills/` |
+
+It needs no database server or credentials, so tests and `verify` run offline once dependencies are installed.
+
+## Using it from scripts and agents
+
+```bash
+bunx create-bun-api describe                       # every command, flag, exit code, and template, as JSON
+bunx create-bun-api my-api --yes --json            # never prompts; prints one JSON result
+bunx create-bun-api my-api --dry-run --json        # lists the files it would write
+bunx create-bun-api doctor --json                  # checks prerequisites and prints fixes
+```
+
+| Exit code | Meaning |
+| --- | --- |
+| 0 | Success |
+| 2 | Usage error or invalid name (`error.hint` suggests one) |
+| 3 | Missing prerequisite (run `doctor`) |
+| 4 | Target directory isn't empty; nothing was changed |
+| 5 | `bun install` failed; nothing was left on disk |
+| 6 | The new project failed `verify`; it was kept for inspection |
+| 1 | Anything else |
+
+The JSON output follows [schemas/result.v1.json](schemas/result.v1.json).
+
+## Skills
+
+| Skill | Use when |
+| --- | --- |
+| [create-bun-api](skills/create-bun-api/SKILL.md) | Starting a new project |
+| [add-endpoint](skills/add-endpoint/SKILL.md) | Adding a route or resource |
+| [add-model](skills/add-model/SKILL.md) | Adding or changing a table |
+| [verify-and-debug](skills/verify-and-debug/SKILL.md) | Before finishing any task, or when something fails |
+
+## Contributing
+
+Project layout, rules, and test commands are in [AGENTS.md](AGENTS.md). Humans and agents use the same
+instructions. The roadmap is [docs/PLAN.md](docs/PLAN.md).
+
+## License
+
+MIT OR Apache-2.0
