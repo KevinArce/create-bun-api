@@ -98,7 +98,14 @@ reviewer. The workflow then waits for your approval before it even runs.
 5. The `release` workflow runs every check, packs, and stages the tarball. Approve it on
    npmjs.com (**create-bun-api → Staged Packages → Approve**, with 2FA), or from a terminal with
    `npm stage list create-bun-api` and then `npm stage approve <stage-id>`.
-6. Confirm: `bunx create-bun-api@x.y.z describe`.
+6. Confirm: `bunx create-bun-api@x.y.z describe`. `npm view create-bun-api@x.y.z dist.attestations`
+   should list a provenance statement (it did for 0.1.1).
+7. Create the GitHub release from the changelog entry:
+
+   ```bash
+   awk '/^## \[x.y.z\]/{f=1; next} /^## \[|^\[Unreleased\]/{f=0} f' CHANGELOG.md \
+     | gh release create vx.y.z --verify-tag --title "create-bun-api x.y.z" --notes-file -
+   ```
 
 ## If something goes wrong
 

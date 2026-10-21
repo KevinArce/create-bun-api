@@ -27,7 +27,7 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
 - [x] First GitHub Actions run green on ubuntu and macOS, Bun 1.4.0 and latest (2026-10-21), which
       confirms `MIN_BUN_VERSION` 1.4.0
 
-## Milestone 2: v0.1.0 on npm
+## Milestone 2: on npm (0.1.1 is `latest`, 2026-10-21)
 - [x] `LICENSE-MIT` and `LICENSE-APACHE` (canonical texts), included in the package
 - [x] `tests/pack.test.ts`: the packed tarball has the right files, installs, and creates a project
       that passes verify
@@ -41,19 +41,20 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
       the commit it was built from.
 - [x] Registry checks in a fresh environment: `bunx create-bun-api@0.1.0 describe` and
       `bun create bun-api demo` (every step ok)
-- [ ] **Owner:** deprecate the `0.0.0-stage` placeholder that npm created during the first publish
-      (docs/releasing.md, step 2)
-- [ ] **Owner:** configure the trusted publisher (Repository `create-bun-api`), then release 0.1.1
-      through CI within 2 days and approve it. 0.1.1 is prepared on `master`: it fixes the
-      metadata URLs and the README shown on npm.
-- [ ] **Owner:** turn off token publishing after 0.1.1 is live (docs/releasing.md, step 4)
+- [x] `0.0.0-stage` placeholder (created by npm during the first publish) deprecated
+- [x] Trusted publisher configured (KevinArce / create-bun-api / `release.yml` / environment `npm`, stage-only)
+- [x] 0.1.1 released through CI: staged by GitHub Actions, verified byte-identical to a local pack
+      of `v0.1.1`, and approved with 2FA. Published with a provenance attestation (SLSA v1). A fresh
+      `bun create bun-api demo` passes every step. GitHub releases exist for `v0.1.0` and `v0.1.1`.
+- [ ] **Owner:** turn off token publishing: npmjs.com → create-bun-api → Settings → Publishing access →
+      "Require two-factor authentication and disallow tokens" (docs/releasing.md, step 4)
 - [x] GitHub repo renamed `bun-cli` → `create-bun-api` (2026-10-21). 11 stars and 2 watchers kept;
       the old URL redirects for the web and for git. `package.json`, the CHANGELOG, and the docs now
       point at the new URL.
 - [ ] Optional: Windows. Add `windows-latest` to CI once it passes there; until then, document macOS and Linux
 
 ## Milestone 3: Retire the `bun-cli` crate
-- [~] Blocked on Milestone 2: the notice must point at a package that exists.
+- Unblocked: `create-bun-api` is live on npm. Needs the owner's go-ahead (publishing to crates.io).
 - [ ] Publish a final 0.4.0 whose binary only prints "bun-cli is retired; use `bun create bun-api <dir>`"
       and exits 1, with a README that says the same (build it from `85e944f`, not from `master`)
 - [ ] Yank 0.1.0–0.3.2 (`cargo yank --version …`), so `cargo install bun-cli` gets the notice instead of
