@@ -49,7 +49,7 @@ On https://www.npmjs.com/package/create-bun-api, open **Settings → Trusted Pub
 | Field | Value |
 | --- | --- |
 | Organization or user | `KevinArce` |
-| Repository | `bun-cli` |
+| Repository | `create-bun-api` |
 | Workflow filename | `release.yml` |
 | Environment name | `npm` |
 | Allowed actions | Leave the default (`npm stage publish`). Don't allow `npm publish`. |

@@ -1,6 +1,6 @@
 # create-bun-api
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KevinArce/bun-cli)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KevinArce/create-bun-api)
 
 **An agent-ready starter for Bun HTTP APIs.** One command creates a working Elysia + SQLite + JWT API
 that installs from a lockfile, makes its first commit, and proves itself with its own `verify` script.

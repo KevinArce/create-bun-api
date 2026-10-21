@@ -36,4 +36,5 @@ Registry checks on 2026-10-21:
   running someone else's code. Tools and docs always use the `create-bun-api` form.
 - The name says "API". If non-API templates are added later, they still fit under the same tool,
   but the name will undersell them.
-- Rename the GitHub repository (currently `bun-cli`) when publishing; GitHub redirects the old URL.
+- The GitHub repository was renamed from `bun-cli` to `create-bun-api` on 2026-10-21. Stars and
+  issues carried over, and GitHub redirects the old URL.

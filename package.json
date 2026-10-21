@@ -33,10 +33,13 @@
   },
   "license": "MIT OR Apache-2.0",
   "author": "Kevin Arce <arcex@proton.me>",
-  "homepage": "https://github.com/KevinArce/bun-cli",
+  "homepage": "https://github.com/KevinArce/create-bun-api",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KevinArce/bun-cli.git"
+    "url": "git+https://github.com/KevinArce/create-bun-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KevinArce/create-bun-api/issues"
   },
   "keywords": [
     "bun",

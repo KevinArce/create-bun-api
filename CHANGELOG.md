@@ -25,5 +25,5 @@ First release on npm. It replaces the Rust `bun-cli` crate (0.3.x on crates.io).
   `add-model`, and `verify-and-debug` in `.agents/skills/` and `.claude/skills/`.
 - The `create-bun-api` skill for starting projects, installable on its own.
 
-[Unreleased]: https://github.com/KevinArce/bun-cli/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/KevinArce/bun-cli/releases/tag/v0.1.0
+[Unreleased]: https://github.com/KevinArce/create-bun-api/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/KevinArce/create-bun-api/releases/tag/v0.1.0

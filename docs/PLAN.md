@@ -35,14 +35,15 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
 - [x] `.github/workflows/release.yml`: on `v*` tags it runs every check, packs, and runs
       `npm stage publish` through trusted publishing (OIDC), for the owner to approve with 2FA.
       It skips versions already on npm.
-- [x] `npx skills add KevinArce/bun-cli --list` finds all 4 skills from the public repo (skills@1.5.22)
+- [x] `npx skills add KevinArce/create-bun-api --list` finds all 4 skills from the public repo (skills@1.5.22)
 - [ ] **Owner:** publish 0.1.0 by hand, then tag `v0.1.0` (docs/releasing.md, step 2). npm can't
       attach a trusted publisher to a package that doesn't exist yet.
 - [ ] **Owner:** configure the trusted publisher and turn off token publishing (docs/releasing.md, steps 3–4)
 - [ ] After publishing: `bun create bun-api demo` and `bunx create-bun-api describe` work from the registry
 - [ ] First release through CI (0.1.1 or 0.2.0), staged and approved
-- [ ] Optional: rename the GitHub repo (for example to `create-bun-api`) and update
-      `homepage`/`repository` in `package.json`. GitHub redirects the old URL.
+- [x] GitHub repo renamed `bun-cli` → `create-bun-api` (2026-10-21). 11 stars and 2 watchers kept;
+      the old URL redirects for the web and for git. `package.json`, the CHANGELOG, and the docs now
+      point at the new URL.
 - [ ] Optional: Windows. Add `windows-latest` to CI once it passes there; until then, document macOS and Linux
 
 ## Milestone 3: Retire the `bun-cli` crate
