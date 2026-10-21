@@ -12,7 +12,10 @@
     "templates",
     "!templates/**/node_modules",
     "skills",
-    "schemas"
+    "schemas",
+    "LICENSE-MIT",
+    "LICENSE-APACHE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "test": "bun test tests",
@@ -22,7 +25,8 @@
     "template:install": "cd templates/api && bun install --frozen-lockfile",
     "template:verify": "cd templates/api && bun run verify",
     "ci": "bun install --frozen-lockfile && bun run typecheck && bun run lint && bun run template:install && bun run template:verify && bun run test && bun run evals:selftest",
-    "evals:selftest": "bun evals/run.ts --agent oracle --arm both && bun evals/run.ts --agent noop"
+    "evals:selftest": "bun evals/run.ts --agent oracle --arm both && bun evals/run.ts --agent noop",
+    "release:check": "bun scripts/check-release.ts"
   },
   "engines": {
     "bun": ">=1.4.0"

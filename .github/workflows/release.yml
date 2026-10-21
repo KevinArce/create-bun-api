@@ -1,0 +1,59 @@
+name: release
+
+# Push a tag like v0.2.0 to release. This workflow runs every check, packs the tarball, and stages
+# it on npm. Nothing is public until a maintainer approves it with 2FA on npmjs.com
+# (Staged Packages tab) or with `npm stage approve <stage-id>`. See docs/releasing.md.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # npm trusted publishing (OIDC); no npm token is stored in this repo
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # Must match the "Environment name" in the npm trusted publisher settings.
+    environment: npm
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+      - name: Install npm 11 (staged publishing needs 11.15 or newer)
+        run: npm install -g npm@11 && npm --version
+      - name: Configure git identity for generated projects
+        run: |
+          git config --global user.name "ci"
+          git config --global user.email "ci@example.com"
+
+      - name: Check tag, version, changelog, and repository
+        run: bun scripts/check-release.ts "$GITHUB_REF_NAME"
+
+      - name: Skip versions that are already on npm
+        id: npm
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if npm view "create-bun-api@$version" version > /dev/null 2>&1; then
+            echo "create-bun-api@$version is already published; nothing to do."
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run every check
+        if: steps.npm.outputs.published == 'false'
+        run: bun run ci
+
+      - name: Pack (the same tarball tests/pack.test.ts checks)
+        if: steps.npm.outputs.published == 'false'
+        run: bun pm pack
+
+      - name: Stage on npm for approval
+        if: steps.npm.outputs.published == 'false'
+        run: npm stage publish ./create-bun-api-*.tgz

@@ -24,16 +24,23 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
 
 ## Milestone 1: Revamp on `master`
 - [x] Commit the redesign and push to `master`
-- [ ] First GitHub Actions run green on ubuntu and macOS, Bun 1.4.0 and latest. The 1.4.0 job is the
-      first check of `MIN_BUN_VERSION` below 1.4.2; lower or raise it based on the result.
+- [x] First GitHub Actions run green on ubuntu and macOS, Bun 1.4.0 and latest (2026-10-21), which
+      confirms `MIN_BUN_VERSION` 1.4.0
 
 ## Milestone 2: v0.1.0 on npm
-- [ ] Add `LICENSE-MIT` and `LICENSE-APACHE` (declared in `package.json`, never present in the repo)
-- [ ] Automate the packed-tarball check (`bun pm pack` → install → `bun x create-bun-api` → verify) as a test
-- [ ] Publish with provenance: configure npm trusted publishing for this repo, then add a release
-      workflow on `v*` tags that runs `bun run ci` before `npm publish --provenance --access public`
+- [x] `LICENSE-MIT` and `LICENSE-APACHE` (canonical texts), included in the package
+- [x] `tests/pack.test.ts`: the packed tarball has the right files, installs, and creates a project
+      that passes verify
+- [x] `CHANGELOG.md`, `scripts/check-release.ts` (`bun run release:check`), and `docs/releasing.md`
+- [x] `.github/workflows/release.yml`: on `v*` tags it runs every check, packs, and runs
+      `npm stage publish` through trusted publishing (OIDC), for the owner to approve with 2FA.
+      It skips versions already on npm.
+- [x] `npx skills add KevinArce/bun-cli --list` finds all 4 skills from the public repo (skills@1.5.22)
+- [ ] **Owner:** publish 0.1.0 by hand, then tag `v0.1.0` (docs/releasing.md, step 2). npm can't
+      attach a trusted publisher to a package that doesn't exist yet.
+- [ ] **Owner:** configure the trusted publisher and turn off token publishing (docs/releasing.md, steps 3–4)
 - [ ] After publishing: `bun create bun-api demo` and `bunx create-bun-api describe` work from the registry
-- [ ] `npx skills add KevinArce/bun-cli` installs the skills (Vercel `skills` CLI)
+- [ ] First release through CI (0.1.1 or 0.2.0), staged and approved
 - [ ] Optional: rename the GitHub repo (for example to `create-bun-api`) and update
       `homepage`/`repository` in `package.json`. GitHub redirects the old URL.
 - [ ] Optional: Windows. Add `windows-latest` to CI once it passes there; until then, document macOS and Linux

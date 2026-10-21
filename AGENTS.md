@@ -6,8 +6,10 @@ A toolkit that scaffolds agent-ready Bun HTTP APIs. It has three parts:
 - `templates/api/`: the template, a real runnable project with its own `bun.lock`, tests, and `AGENTS.md`.
 - `skills/`: Agent Skills (`SKILL.md`), copied into generated projects and also installable on their own.
 
-**Releases:** never publish to npm or crates.io without the owner's explicit go-ahead. The roadmap is
-`docs/PLAN.md`; the reasons behind it are in `docs/decisions/`.
+**Releases:** never publish to npm or crates.io, or push release tags, without the owner's explicit
+go-ahead. Releases are staged by `.github/workflows/release.yml` and approved by the owner with 2FA;
+see `docs/releasing.md`. Every user-visible change gets a line under `[Unreleased]` in `CHANGELOG.md`.
+The roadmap is `docs/PLAN.md`; the reasons behind it are in `docs/decisions/`.
 
 ## Commands
 
@@ -19,6 +21,7 @@ A toolkit that scaffolds agent-ready Bun HTTP APIs. It has three parts:
 | Fast subset | `bun test tests/unit.test.ts tests/contract.test.ts` |
 | Template checks | `cd templates/api && bun run verify` |
 | Everything CI would run | `bun run ci` |
+| Before tagging a release | `bun run release:check vX.Y.Z` |
 
 ## Rules
 
@@ -51,9 +54,10 @@ src/manifest.ts    commands, flags, exit and error codes, templates (the single 
 src/commands/      new.ts, doctor.ts, describe.ts
 src/engine/        name validation, file planning, subprocess runner, version comparison
 schemas/           JSON Schema for --json output
+scripts/           check-release.ts: tag, version, CHANGELOG, and repository.url checks before a release
 templates/api/     the API template; its own AGENTS.md describes its conventions
 skills/            create-bun-api (for the toolkit), plus add-endpoint, add-model, verify-and-debug (copied into projects)
-tests/             unit, contract, faults (failure injection), e2e, skills
+tests/             unit, contract, faults (failure injection), e2e, skills, pack (the published tarball)
 evals/             agent task evaluations (see evals/README.md)
 docs/              PLAN.md, decisions/
 ```
