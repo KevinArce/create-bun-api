@@ -7,25 +7,20 @@ that installs from a lockfile, makes its first commit, and proves itself with it
 The project ships with `AGENTS.md` and Agent Skills, so coding agents (Claude Code, Codex, Cursor,
 Gemini CLI, and others) follow the same conventions every time.
 
-> **Status:** pre-release, not yet published to npm ([roadmap](docs/PLAN.md)). This replaces the Rust
-> `bun-cli` crate (0.3.x); see [docs/decisions/0001-agent-first-redesign.md](docs/decisions/0001-agent-first-redesign.md)
-> for why.
+> **Status:** early release ([npm](https://www.npmjs.com/package/create-bun-api), [roadmap](docs/PLAN.md)).
+> This replaces the Rust `bun-cli` crate (0.3.x); see
+> [docs/decisions/0001-agent-first-redesign.md](docs/decisions/0001-agent-first-redesign.md) for why.
 
 ## Quick start
 
-Once published:
+Requires [Bun](https://bun.com) 1.4 or newer.
 
 ```bash
 bun create bun-api my-api        # or: bunx create-bun-api my-api
 cd my-api && bun run dev          # http://localhost:3000 · API docs at /docs
 ```
 
-From this repository today:
-
-```bash
-bun install
-bun src/cli.ts ../my-api
-```
+From a checkout of this repository: `bun install && bun src/cli.ts ../my-api`.
 
 ## What you get
 

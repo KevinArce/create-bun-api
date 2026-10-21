@@ -36,11 +36,17 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
       `npm stage publish` through trusted publishing (OIDC), for the owner to approve with 2FA.
       It skips versions already on npm.
 - [x] `npx skills add KevinArce/create-bun-api --list` finds all 4 skills from the public repo (skills@1.5.22)
-- [ ] **Owner:** publish 0.1.0 by hand, then tag `v0.1.0` (docs/releasing.md, step 2). npm can't
-      attach a trusted publisher to a package that doesn't exist yet.
-- [ ] **Owner:** configure the trusted publisher and turn off token publishing (docs/releasing.md, steps 3–4)
-- [ ] After publishing: `bun create bun-api demo` and `bunx create-bun-api describe` work from the registry
-- [ ] First release through CI (0.1.1 or 0.2.0), staged and approved
+- [x] 0.1.0 published by hand (2026-10-21, before the repo rename, so its metadata uses the old URL,
+      which redirects). The tarball is byte-identical to the tested one. Tagged `v0.1.0` at `da6fa40`,
+      the commit it was built from.
+- [x] Registry checks in a fresh environment: `bunx create-bun-api@0.1.0 describe` and
+      `bun create bun-api demo` (every step ok)
+- [ ] **Owner:** deprecate the `0.0.0-stage` placeholder that npm created during the first publish
+      (docs/releasing.md, step 2)
+- [ ] **Owner:** configure the trusted publisher (Repository `create-bun-api`), then release 0.1.1
+      through CI within 2 days and approve it. 0.1.1 is prepared on `master`: it fixes the
+      metadata URLs and the README shown on npm.
+- [ ] **Owner:** turn off token publishing after 0.1.1 is live (docs/releasing.md, step 4)
 - [x] GitHub repo renamed `bun-cli` → `create-bun-api` (2026-10-21). 11 stars and 2 watchers kept;
       the old URL redirects for the web and for git. `package.json`, the CHANGELOG, and the docs now
       point at the new URL.

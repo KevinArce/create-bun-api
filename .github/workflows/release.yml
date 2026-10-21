@@ -32,9 +32,8 @@ jobs:
           git config --global user.name "ci"
           git config --global user.email "ci@example.com"
 
-      - name: Check tag, version, changelog, and repository
-        run: bun scripts/check-release.ts "$GITHUB_REF_NAME"
-
+      # First, so tags for versions published by hand (like v0.1.0) skip every later step,
+      # including the repository check, which older commits can fail after a repo rename.
       - name: Skip versions that are already on npm
         id: npm
         run: |
@@ -45,6 +44,10 @@ jobs:
           else
             echo "published=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Check tag, version, changelog, and repository
+        if: steps.npm.outputs.published == 'false'
+        run: bun scripts/check-release.ts "$GITHUB_REF_NAME"
 
       - name: Run every check
         if: steps.npm.outputs.published == 'false'

@@ -1,6 +1,6 @@
 {
   "name": "create-bun-api",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create an agent-ready Bun + Elysia HTTP API (SQLite, JWT auth, OpenAPI docs) with one non-interactive command. Ships AGENTS.md, Agent Skills, and a verify script; --json output for AI coding agents.",
   "type": "module",
   "bin": {

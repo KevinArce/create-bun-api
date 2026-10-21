@@ -12,7 +12,7 @@ first version is published by hand once.
 - Sign in at https://www.npmjs.com (or create an account) and turn on two-factor authentication
   (**Account → Two-Factor Authentication**). Publishing, trust settings, and approvals all require it.
 
-### 2. Publish 0.1.0 by hand
+### 2. Publish 0.1.0 by hand (done 2026-10-21)
 
 Run this from a clean checkout of `master`:
 
@@ -32,10 +32,17 @@ bunx create-bun-api describe | head -5
 bun create bun-api demo --yes && cd demo && bun run verify
 ```
 
-Tag the release. The release workflow sees that 0.1.0 is already on npm and does nothing:
+Tag the commit you packed. The release workflow sees that 0.1.0 is already on npm and does nothing:
 
 ```bash
-git tag v0.1.0 && git push origin v0.1.0
+git tag -a v0.1.0 <commit> -m "create-bun-api 0.1.0" && git push origin v0.1.0
+```
+
+Publishing a brand-new package with 2FA makes npm create a `0.0.0-stage` placeholder version first.
+It stays listed after the real version goes live. Mark it so nobody installs it by mistake:
+
+```bash
+npm deprecate create-bun-api@0.0.0-stage "Placeholder created by npm during the first publish. Use create-bun-api@latest."
 ```
 
 ### 3. Connect GitHub Actions as the trusted publisher
@@ -101,3 +108,4 @@ reviewer. The workflow then waits for your approval before it even runs.
 | `check-release` fails: `repository.url` | The repo was renamed or moved. Update `package.json`, then the trusted publisher settings. |
 | Publish fails with 401, 403, or an OIDC error | The trusted publisher fields don't match the workflow (filename `release.yml`, environment `npm`, repository), or the configuration expired after 2 unused days. Recreate it. |
 | A bad version went out | `npm deprecate create-bun-api@x.y.z "reason"` and release a fix. Unpublishing is limited and breaks users, so avoid it. |
+| `bun create bun-api` fails with "could not determine executable to run" | Bun cached a stale `@latest` install. Here it was the placeholder, cached during the minute before 0.1.0 went live. Delete `$TMPDIR/bunx-*-create-bun-api@latest` and run it again. |

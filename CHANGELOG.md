@@ -6,6 +6,14 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-21
+
+### Fixed
+
+- Package metadata (`repository`, `homepage`, `bugs`) now points to the renamed GitHub repository,
+  `KevinArce/create-bun-api`. The 0.1.0 links still work through GitHub's redirect.
+- The README on npm no longer says the package is unpublished.
+
 ## [0.1.0] - 2026-10-21
 
 First release on npm. It replaces the Rust `bun-cli` crate (0.3.x on crates.io).
@@ -25,5 +33,6 @@ First release on npm. It replaces the Rust `bun-cli` crate (0.3.x on crates.io).
   `add-model`, and `verify-and-debug` in `.agents/skills/` and `.claude/skills/`.
 - The `create-bun-api` skill for starting projects, installable on its own.
 
-[Unreleased]: https://github.com/KevinArce/create-bun-api/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/KevinArce/create-bun-api/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/KevinArce/create-bun-api/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/KevinArce/create-bun-api/releases/tag/v0.1.0
