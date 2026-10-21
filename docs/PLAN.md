@@ -53,14 +53,16 @@ Legend: `[x]` done · `[ ]` open · `[~]` blocked (reason given)
       point at the new URL.
 - [ ] Optional: Windows. Add `windows-latest` to CI once it passes there; until then, document macOS and Linux
 
-## Milestone 3: Retire the `bun-cli` crate
-- Unblocked: `create-bun-api` is live on npm. Needs the owner's go-ahead (publishing to crates.io).
-- [ ] Publish a final 0.4.0 whose binary only prints "bun-cli is retired; use `bun create bun-api <dir>`"
-      and exits 1, with a README that says the same (build it from `85e944f`, not from `master`)
-- [ ] Yank 0.1.0–0.3.2 (`cargo yank --version …`), so `cargo install bun-cli` gets the notice instead of
-      the broken generator that could auto-run `curl | bash`
-- Don't delete the crate: deleting frees the name for anyone, and existing `cargo install bun-cli`
-  users would get whatever they publish.
+## Milestone 3: Retire the `bun-cli` crate (done 2026-10-21)
+- [x] Published 0.4.0: the binary only prints "bun-cli is retired … `bun create bun-api my-api`" to
+      stderr and exits 1, without reading stdin or running anything. Its README says the same. Source:
+      branch `bun-cli-crate`, tag `bun-cli-v0.4.0` (commit `4a83430`, built from `85e944f`, which matches
+      the sha recorded in the crate).
+- [x] Yanked 0.1.0–0.3.2. `cargo install bun-cli` now installs 0.4.0, and `--version 0.3.2` is refused
+      as yanked.
+- [x] Crate kept (not deleted), so nobody else can claim the `bun-cli` name.
+- [ ] **Owner:** revoke the `retire-bun-cli` token at https://crates.io/settings/tokens (it was removed
+      from the local toolchain with `cargo logout`; revoking also kills it on the server).
 
 ## Milestone 4: Measure with real agents (owner's separate session)
 - [ ] Baseline vs toolkit: `bun evals/run.ts --agent claude --arm both --reps 5 --execute`, then the
