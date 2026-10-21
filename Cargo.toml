@@ -1,12 +1,16 @@
 [package]
 name = "bun-cli"
-version = "0.3.2"
+version = "0.4.0"
 edition = "2021"
 authors = ["Kevin Arce <arcex@proton.me>"]
 license = "MIT OR Apache-2.0"
-description = "Bun CLI Generator is a command-line tool built in Rust, designed to streamline the process of setting up new Bun projects. With a simple command, users can generate a basic Bun project structure, including necessary configuration files and a ready-to-go project setup, saving time and setting a standard structure for Bun applications."
+description = "Retired. This crate no longer creates projects; use `bun create bun-api <dir>` (npm package create-bun-api) instead."
 readme = "README.md"
-homepage = "https://github.com/KevinArce/bun-cli"
-repository = "https://github.com/KevinArce/bun-cli"
-keywords = ["cli", "search", "demo"]
+homepage = "https://www.npmjs.com/package/create-bun-api"
+repository = "https://github.com/KevinArce/create-bun-api"
+keywords = ["bun", "elysia", "scaffold", "deprecated"]
 categories = ["command-line-utilities"]
+include = ["src/main.rs", "README.md", "LICENSE-MIT", "LICENSE-APACHE"]
+
+[badges]
+maintenance = { status = "deprecated" }
